@@ -1,0 +1,14 @@
+<template name="nav">
+      <view class="nav_link" bindtap="{{fn}}">
+        <button
+          type="{{bttype}}"
+          size="5prpx"
+          bindtap="homepage">
+          主页
+        </button>
+
+
+
+
+      </view>
+</template>

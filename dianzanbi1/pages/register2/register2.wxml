@@ -1,0 +1,20 @@
+<form bindsubmit="formSubmit" bindreset="formReset">
+
+  <view class="page-body">
+
+    <text style='position:relative; left:20rpx;top:50rpx;'>手机号：</text>
+    <input name='mobile' disabled='true' style='position:relative; left:0rpx;top:50rpx;border:0.5px solid #378888;' value="{{mobile}}"/>
+
+    <text style='position:relative; left:20rpx;top:100rpx;'>密码：</text>
+    <input name='password' style='position:relative; left:0rpx;top:100rpx;border:0.5px solid #378888;' bindinput='checkpw' password='ture'/>
+
+    <text style='position:relative; left:20rpx;top:150rpx;'>再次输入密码：</text>
+    <input name='password2' style='position:relative; left:0rpx;top:150rpx;border:0.5px solid #378888;' bindinput='checkpw2' password='ture'/>
+
+    <text style='position:relative; left:120rpx;top:250rpx;'>{{tips}}</text>
+
+    <button style='position:relative; left:0rpx;top:500rpx;' formType="submit">注册</button>
+
+  </view>
+
+</form>

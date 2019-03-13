@@ -1,0 +1,51 @@
+
+<view class="page-body">
+    <view style='background-color:#E61A1A;text-align: center;height: 100rpx;'>
+      <text style='color:white;font-size:80rpx;'>{{total}}</text>
+    </view>
+    <view style='background-color:#E61A1A;text-align: center;height: 50rpx;'>
+    <text style='color:white;font-size:30rpx;'>钱包总额</text>
+    </view>
+
+    <view style='display: flex;background-color:#E61A1A;text-align: center;height: 180rpx;'>
+
+      <view style='width:375rpx;height: 100rpx;'>
+        <text style='color:white;font-size:80rpx;'>{{income}}</text>
+        <view style='width:375rpx;height: 60rpx;'>
+          <text style='color:white;font-size:30rpx;'>当月总收入</text>
+        </view>
+      </view>
+
+      <view style='width:375rpx;height: 100rpx;'>
+        <text style='color:white;font-size:80rpx;'>{{enpend}}</text>
+        <view style='width:375rpx;height: 60rpx;'>
+          <text style='color:white;font-size:30rpx;'>当月总支出</text>
+        </view>
+      </view>
+
+    </view>
+
+    <view style='height:100rpx;padding-top:20rpx;padding-left:50rpx;'>
+      <text style='color:black;font-size:35rpx;' bindtap='getdetail'>交易明细 >> </text>
+    </view>
+
+
+   
+
+
+</view>
+
+<view style='position:fixed;bottom:0rpx;width:100%;display:flex;flex-direction:row;justify-content:center;'>
+  <view style='width:150rpx;'>
+    <button size='mini' type='primary' class='free-btn-bordernone' bindtap='gobalance'>主页</button>
+  </view>
+  <view style='width:150rpx;'>
+    <button size='mini' type='default' class='free-btn-bordernone'>转账</button>
+  </view>
+  <view style='width:150rpx;'>
+    <button size='mini' type='default' class='free-btn-bordernone'>好友</button>
+  </view>
+  <view style='width:150rpx;'>
+    <button size='mini' type='default' class='free-btn-bordernone'>我的</button>
+  </view>
+</view>
