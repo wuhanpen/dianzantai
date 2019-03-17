@@ -8,3 +8,16 @@
 import {sequelize, Sequelize} from './sequelize_helper';
 import Staff from './staff'
 
+
+// Account.hasMany(Balance, {
+//     as: 'balance'
+// });
+
+sequelize.sync();
+
+const entities = {
+    Staff,
+    sequelize,
+    Sequelize
+};
+export default entities;

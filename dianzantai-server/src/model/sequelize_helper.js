@@ -18,7 +18,6 @@ if (env === 'production') {
     passwd = prod.passwd;
     host = prod.host
 }
-const logger = require('../lib/logger');
 
 const sequelize = new Sequelize('dispatcher', 'root', passwd, {
     host: host,
