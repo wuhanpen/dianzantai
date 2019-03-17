@@ -1,0 +1,34 @@
+{
+  "version": "1.0.0",
+  "debug": false,
+  "passwd": "m7315202",
+  "log_options": {
+    "level": "info",
+    "filename": "./logs/api",
+    "filesize": "1000000",
+    "filecount": "100"
+  },
+  "token": {
+    "currency": "YUT",
+    "issuer": "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or"
+  },
+  "skywelld_servers": {
+    "server": "ws://59.175.148.101:5020"
+  },
+  "freezed": {
+    "reserved": 20.0,
+    "each_freezed": 5.0
+  },
+  "database": {
+    "prod": {
+      "host": "",
+      "passwd": ""
+    },
+    "dev": {
+      "host": "localhost",
+      "passwd": "m7315202"
+    }
+  },
+  "base_currency": "SWT",
+  "issuer": "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or"
+}
