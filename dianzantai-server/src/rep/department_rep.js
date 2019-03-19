@@ -31,6 +31,30 @@ function save(department) {
     })
 }
 
+/**
+ * 通过部门名称查询
+ * @param departmentName 部门名称
+ * @return {Promise<any>}
+ */
+function findByName(departmentName) {
+    return new Promise((resolve, reject) => {
+        entities.Department.findOne({
+            where: {
+                name: departmentName
+            }
+        }).then(department => {
+            resolve(department)
+        }).catch(error => {
+            reject(error)
+        })
+    })
+}
+
+/**
+ * 通过id查询部门
+ * @param departmentId 部门id
+ * @return {Promise<any>}
+ */
 function findById(departmentId) {
     return new Promise(((resolve, reject) => {
         entities.Department.findById(departmentId, {
@@ -48,5 +72,6 @@ function findById(departmentId) {
 
 export default {
     save: save,
-    findById: findById
+    findById: findById,
+    findByName: findByName
 }

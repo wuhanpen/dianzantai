@@ -24,7 +24,6 @@ describe('数据库部门表接口相关测试', () => {
 
 describe('数据库员工表接口相关测试', () => {
     it('staff save', function (done) {
-
         departmentRep.findById('1234').then(department => {
             staffRep.save({phoneNum: '18907185157', name: '邓晓宇', position: '院长', number: '027-65666502'},
                 department).then(staff => {
@@ -35,7 +34,7 @@ describe('数据库员工表接口相关测试', () => {
                 done(error)
             })
         }).catch(error => {
-            logger.error(error)
+            logger.error(error);
             done(error)
         })
     });
