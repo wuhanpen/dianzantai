@@ -31,7 +31,7 @@ describe('数据库员工表接口相关测试', () => {
                 logger.info(staff.dataValues);
                 done();
             }).catch(error => {
-                logger.error(error)
+                logger.error(error);
                 done(error)
             })
         }).catch(error => {
