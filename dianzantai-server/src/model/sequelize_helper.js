@@ -7,19 +7,19 @@
  \*/
 const Sequelize = require('sequelize');
 const config = require('../lib/config');
-
+const database = config.get('database');
 const prod = config.get('database.prod');
 const dev = config.get('database.dev');
 const env = process.env.NODE_ENV || 'development';
 
-let passwd = dev.passwd;
-let host = dev.host;
+let passwd = database.dev.passwd;
+let host = database.dev.host;
 if (env === 'production') {
-    passwd = prod.passwd;
-    host = prod.host
+    passwd = database.prod.passwd;
+    host = database.prod.host
 }
 
-const sequelize = new Sequelize('dispatcher', 'root', passwd, {
+const sequelize = new Sequelize('dianzantai', 'root', passwd, {
     host: host,
     dialect: 'mysql',
     port: 3306,
