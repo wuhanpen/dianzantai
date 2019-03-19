@@ -7,16 +7,18 @@
  \*/
 import {sequelize, Sequelize} from './sequelize_helper';
 import Staff from './staff'
+import Department from './department'
 
 
-// Account.hasMany(Balance, {
-//     as: 'balance'
-// });
+Department.hasMany(Staff, {
+    as: 'staff'
+});
 
 sequelize.sync();
 
 const entities = {
     Staff,
+    Department,
     sequelize,
     Sequelize
 };
