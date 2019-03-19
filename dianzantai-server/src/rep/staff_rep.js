@@ -24,8 +24,8 @@ function save(staff, department) {
             }).spread((savedStaff, created) => {
                 if (created) {
                     // 设置department和staff 一对多关系
-                    Department.hasMany(Staff)
-                    Staff.belongsTo(Department)
+                    Department.hasMany(Staff);
+                    Staff.belongsTo(Department);
                     department.addStaff(savedStaff).then(() => {
                         logger.info('created staff!', savedStaff.dataValues);
                         resolve(savedStaff);
