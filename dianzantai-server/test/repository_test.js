@@ -20,7 +20,17 @@ describe('数据库部门表接口相关测试', () => {
             done(error);
         })
     });
-})
+
+    it('department findByName', function (done) {
+        departmentRep.findByName('信息咨询研究院').then(function (department) {
+            logger.info(department.dataValues);
+            done();
+        }).catch((error) => {
+            logger.error(error);
+            done(error);
+        })
+    });
+});
 
 describe('数据库员工表接口相关测试', () => {
     it('staff save', function (done) {
