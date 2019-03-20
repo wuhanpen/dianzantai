@@ -12,15 +12,12 @@ const logger = require('../src/lib/logger');
 //import departmentRep from '../src/rep/department_rep';
 import staffRep from '../src/rep/staff_rep';
 
-var xlxs = require('node-xlsx');
+const xlxs = require('node-xlsx');
+const sheets = xlxs.parse('dianzantai-server/src/assert/部门2019年通讯录3.15v1.xlsx');//获取到所有sheets
 
-var sheets = xlxs.parse('dianzantai-server/src/assert/部门2019年通讯录3.15v1.xlsx');//获取到所有sheets
+describe('excel导入数据相关测试', () => {
 
-//console.log(sheets[1]);
-console.log(sheets[0]);
-
-describe('excel导入部门数据相关测试', () => {
-    it('department save', function (done) {
+    it('部门导入', function (done) {
         this.timeout(0);
         for (let i = 2; i < sheets[1].data.length - 1; i++) {
             console.log(sheets[1].data);
@@ -33,14 +30,10 @@ describe('excel导入部门数据相关测试', () => {
             })
         }
     });
-});
 
-
-describe('excel导入成员数据测试', () => {
-    it('staff save', function (done) {
+    it('员工导入', function (done) {
         for (let i = 1; i < sheets[0].data.length; i++) {
             departmentRep.findByName(sheets[0].data[i][2]).then(department => {
-                //console.log(department.dataValues);
                 staffRep.save({
                         phoneNum: sheets[0].data[i][4],
                         name: sheets[0].data[i][1],
@@ -51,10 +44,8 @@ describe('excel导入成员数据测试', () => {
                     logger.info(staff.dataValues);
                     done();
                 }).catch(error => {
-                    {
-                        logger.info(error);
-                        done(error);
-                    }
+                    logger.info(error);
+                    done(error);
                 })
             }).catch(error => {
                 logger.info(error);
@@ -63,11 +54,3 @@ describe('excel导入成员数据测试', () => {
         }
     });
 });
-// sheets.forEach(function(sheet){
-//     console.log(sheet['data']);
-//     for(var rowId in sheet['data']){
-//         console.log(rowId);
-//         var row=sheet['data'][rowId];
-//         console.log(row);
-//     }
-// });
