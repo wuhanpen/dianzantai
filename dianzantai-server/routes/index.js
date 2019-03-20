@@ -11,7 +11,7 @@ router.get('/', function (req, res, next) {
  */
 router.get('/account_info', (req, res) => {
 
-})
+});
 
 /**
  * 向指定账户发送点赞币
@@ -19,6 +19,6 @@ router.get('/account_info', (req, res) => {
  */
 router.post('/send/dianzanbi', (req, res) => {
 
-})
+});
 
 module.exports = router;

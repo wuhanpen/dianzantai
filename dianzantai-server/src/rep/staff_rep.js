@@ -43,6 +43,17 @@ function save(staff, department) {
     })
 }
 
+function findAll() {
+    return new Promise((resolve, reject) => {
+        entities.Staff.findAll().then(staff => {
+            resolve(staff)
+        }).catch(error => {
+            reject(error)
+        })
+    })
+}
+
 export default {
     save: save,
+    findAll: findAll
 }
