@@ -7,12 +7,12 @@
 
 import {sequelize, Sequelize} from "./sequelize_helper";
 
-const Staff = sequelize.define("department", {
+const Department = sequelize.define("department", {
     id: {
         type: Sequelize.STRING,
         primaryKey: true
     },
     name: Sequelize.STRING, // 部门名称
 });
-export default Staff;
+export default Department;
 

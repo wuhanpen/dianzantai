@@ -13,7 +13,7 @@ const logger = require('../src/lib/logger');
 import staffRep from '../src/rep/staff_rep';
 
 const xlxs = require('node-xlsx');
-const sheets = xlxs.parse('dianzantai-server/src/assert/部门2019年通讯录3.15v1.xlsx');//获取到所有sheets
+const sheets = xlxs.parse('dianzantai-server/assert/部门2019年通讯录3.15v1.xlsx');//获取到所有sheets
 
 describe('excel导入数据相关测试', () => {
 
