@@ -20,6 +20,14 @@ router.get('/staff/login', (req, res) => {
 });
 
 /**
+ * 发送短信验证码
+ */
+router.get('/staff/sms/code', (req, res) => {
+    mainService
+})
+
+
+/**
  * 查看通信录
  */
 router.get('/staff/contact', (req, res) => {

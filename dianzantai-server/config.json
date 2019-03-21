@@ -29,6 +29,22 @@
       "passwd": "Hptpd401!@#$"
     }
   },
+  "oss": {
+    "client": {
+      "sts": true,
+      "accessKeyId": "LTAIGya4xgre5Ppj",
+      "accessKeySecret": "426HxRIt17gfQd8QDFbpqfdjtCHAoq",
+      "bucket": "hptpd",
+      "endpoint": "oss-cn-beijing.aliyuncs.com"
+    }
+  },
+  "verificationCode": {
+    "validTime": 600,
+    "dayMax": 10,
+    "signName": "湖北邮电规划设计有限公司",
+    "accessKeyId": "LTAI1eRdo043E3uv",
+    "secretAccessKey": "khFdst4p5ZReux059V8fPWZ3nLeyHA"
+  },
   "base_currency": "SWT",
   "issuer": "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or"
 }

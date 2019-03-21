@@ -53,7 +53,18 @@ function findAll() {
     })
 }
 
+function findById(id) {
+    return new Promise((resolve, reject) => {
+        entities.Staff.findById(id).then(staff => {
+            resolve(staff)
+        }).catch(error => {
+            reject(error)
+        })
+    })
+}
+
 export default {
     save: save,
-    findAll: findAll
+    findAll: findAll,
+    findById
 }

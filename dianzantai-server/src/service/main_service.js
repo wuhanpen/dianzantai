@@ -80,4 +80,9 @@ mainService.findAllStaffOrdbyFL = function () {
     })
 };
 
+mainService.createSMSCode = function (phoneNum) {
+
+
+};
+
 module.exports = mainService;
