@@ -6,16 +6,18 @@
  \*/
 
 import entities from '../model/entities';
-import VerificationCode from '../model/verification_code'
+
 const logger = require('../lib/logger');
 
 
 function findByPhoneNum(phone) {
     return new Promise((resolve, reject) => {
-        entities.VerificationCode.findOne({where: {
+        entities.VerificationCode.findOne({
+            where: {
                 content: phone
-            }}).then(verificationCode => {
-                resolve(verificationCode)
+            }
+        }).then(verificationCode => {
+            resolve(verificationCode)
         }).catch(error => {
             reject(error)
         })

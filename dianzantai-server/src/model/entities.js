@@ -23,6 +23,5 @@ const entities = {
     VerificationCode,
     sequelize,
     Sequelize,
-    VerificationCode
 };
 export default entities;

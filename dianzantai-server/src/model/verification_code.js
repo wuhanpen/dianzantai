@@ -7,6 +7,7 @@
 
 import {sequelize, Sequelize} from "./sequelize_helper";
 const { STRING, INTEGER, DATE } = Sequelize;
+const moment = require('moment');
 
 const VerificationCode = sequelize.define("verification_code", {
     id: {
