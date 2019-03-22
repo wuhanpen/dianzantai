@@ -20,6 +20,7 @@ sequelize.sync();
 const entities = {
     Staff,
     Department,
+    VerificationCode,
     sequelize,
     Sequelize,
     VerificationCode

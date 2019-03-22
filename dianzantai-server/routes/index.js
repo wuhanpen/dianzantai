@@ -1,9 +1,15 @@
 const express = require('express');
+const _ = require('lodash')
 const router = express.Router();
+let env = process.env.NODE_ENV || 'development';
 
-/* GET home page. */
-router.get('/', function (req, res, next) {
-    res.render('index', {title: 'Express'});
+/* 服务端主页 */
+router.get('/(|item)', function (req, res) {
+    if (_.trim(env) === 'production') {
+        res.render('dist/index');
+        return res;
+    }
+    res.render('views/index');
 });
 
 /**
