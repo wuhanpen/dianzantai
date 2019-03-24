@@ -22,6 +22,6 @@ function createRandomStr(n) {
 }
 
 export default {
-    createRandomStr,
+    createRandomStr
 
 }

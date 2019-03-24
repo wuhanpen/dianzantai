@@ -57,7 +57,7 @@ function findByName(departmentName) {
  */
 function findById(departmentId) {
     return new Promise(((resolve, reject) => {
-        entities.Department.findById(departmentId, {
+        entities.Department.findByPk(departmentId, {
             include: [{
                 model: Staff,
                 as: 'staff'

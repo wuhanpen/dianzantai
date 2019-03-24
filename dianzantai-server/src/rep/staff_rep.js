@@ -55,7 +55,7 @@ function findAll() {
 
 function findById(id) {
     return new Promise((resolve, reject) => {
-        entities.Staff.findById(id).then(staff => {
+        entities.Staff.findByPk(id).then(staff => {
             resolve(staff)
         }).catch(error => {
             reject(error)

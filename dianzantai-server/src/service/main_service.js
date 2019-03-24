@@ -7,7 +7,15 @@
 
 import staffRep from '../rep/staff_rep';
 import pingyinUtil from '../utils/pinyinUtil'
+import vecricode_rep from "../rep/vericode_rep";
+import utils from "../utils/utils";
 
+const SMSClient = require('@alicloud/sms-sdk');
+const config = require('../lib/config');
+const verificationCode = config.get('verificationCode');
+const moment = require('moment');
+
+let smsClient = null;
 let mainService = {};
 
 mainService.findAllStaffOrdbyFL = function () {
@@ -81,8 +89,108 @@ mainService.findAllStaffOrdbyFL = function () {
 };
 
 mainService.createSMSCode = function (phoneNum) {
+    let user = staffRep.findById(phoneNum);
+    if (user === null) {
 
-
+    }
+    const result = vecricode_rep.findByPhoneNum(phoneNum);
+    console.log(result.dataValues);
+    let msgInfo = {};
+    let code = utils.createRandomStr(4);
+    if (result.PromiseValue !== undefined) {
+        let codeInfo = {};
+        codeInfo.phoneNum = phoneNum;
+        codeInfo.code = code;
+        codeInfo.status = 1;
+        codeInfo.riseTime = moment().toDate();
+        codeInfo.validTime = moment().add(verificationCode.validTime, 'seconds').toDate();
+        codeInfo.count = 1;
+        codeInfo.dayCount = 1;
+        codeInfo.dayMax = verificationCode.dayMax;
+        vecricode_rep.update(codeInfo);
+        msgInfo.data = code;
+        return msgInfo;
+    } else {
+        let codeInfo = {};
+        codeInfo.phoneNum = phoneNum;
+        codeInfo.code = code;
+        codeInfo.status = 1;
+        codeInfo.riseTime = moment().toDate();
+        codeInfo.validTime = moment().add(verificationCode.validTime, 'seconds').toDate();
+        codeInfo.count = 1;
+        codeInfo.dayCount = 1;
+        codeInfo.dayMax = verificationCode.dayMax;
+        vecricode_rep.save(codeInfo);
+        msgInfo.data = code;
+        return msgInfo;
+    }
 };
+
+mainService.sentSMS=function(option) {
+    if (smsClient === null) {
+        let configVerificationCode = verificationCode;
+        const accessKeyId = configVerificationCode.accessKeyId;
+        const secretAccessKey = configVerificationCode.secretAccessKey;
+        smsClient = new SMSClient({accessKeyId, secretAccessKey});
+    }
+    return new Promise((resolve, reject) => {
+        smsClient.sendSMS(option).then(function (res) {
+            let {Code} = res;
+            if (Code === 'OK') {
+                resolve(Code);
+            } else {
+                reject(Code);
+            }
+        }, function (err) {
+            reject(err);
+        });
+    })
+};
+
+mainService.sendVerifyCode = function (phoneNumber, code) {
+    let option = {};
+    let templateParam = {code: code.data};
+    option.PhoneNumbers = phoneNumber;
+    option.SignName = verificationCode.signName;
+    option.TemplateCode = 'SMS_148866200';
+    option.TemplateParam = JSON.stringify(templateParam);
+    //option.TemplateParam = code.data;
+    let sendStatus = mainService.sendSMS(option);
+    return sendStatus;
+};
+
+/**
+ * 检验验证码
+ * @param phoneNumber
+ * @param code
+ */
+mainService.verifyCode = function (phoneNumber, code) {
+    const result = vecricode_rep.findByPhoneNum(phoneNumber);
+    let data = {};
+    console.log(result.validTime)
+    if (!result) {
+        data.message = '验证码不正确！';
+        data.success = false;
+        return data;
+    } else if (code !== result.code) {
+        data.message = '验证码不正确！';
+        data.success = false;
+        return data;
+    } else if (result.status === 0) {
+        data.message = '验证码不正确！';
+        data.success = false;
+        return data;
+    } else if (moment().toDate().getTime() > moment(result.validTime).toDate().getTime()) {
+        data.message = '验证码已过期！';
+        data.success = false;
+        return data;
+    } else {
+        data.message = '验证成功';
+        data.success = true;
+        vecricode_rep.update();
+        return data;
+    }
+};
+
 
 module.exports = mainService;

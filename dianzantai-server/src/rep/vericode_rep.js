@@ -49,7 +49,30 @@ function save(vericode) {
     })
 }
 
+function update(vericode) {
+    return new Promise((resolve, reject) => {
+        entities.VerificationCode.update({
+            code: vericode.code,
+            status: vericode.status,
+            riseTime: vericode.riseTime,
+            validTime: vericode.validTime,
+            count: vericode.count,
+            dayCount: vericode.dayCount,
+            dayMax: vericode.dayMax
+        }, {
+            where: {
+                content: vericode.phoneNum
+            }
+        }).then(vericode => {
+            resolve(vericode);
+        }).catch(error => {
+            reject(error);
+        })
+    })
+}
+
 export default {
     findByPhoneNum,
-    save
+    save,
+    update
 }

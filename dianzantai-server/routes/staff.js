@@ -5,6 +5,7 @@ const router = express.Router();
 
 import mainService from '../src/service/main_service'
 
+
 /**
  * 用户首次登陆激活
  */
@@ -23,8 +24,17 @@ router.get('/staff/login', (req, res) => {
  * 发送短信验证码
  */
 router.get('/staff/sms/code', (req, res) => {
-    mainService
-})
+    mainService.createSMSCode(req.query.phone).then(code=>{
+        console.log(code);
+        mainService.sendVerifyCode(req.query.phone, code).then(sendStatus=>{
+            res.send(sendStatus);
+        }).catch(error=>{
+            res.json({error:error});
+        })
+    }).catch(error =>{
+        res.json({error:error});
+    })
+});
 
 
 /**
