@@ -6,6 +6,7 @@
  \*/
 
 import entities from '../model/entities';
+import VerificationCode from '../model/verification_code'
 
 const logger = require('../lib/logger');
 
@@ -24,6 +25,31 @@ function findByPhoneNum(phone) {
     })
 }
 
+/**
+ *
+ * @param vericode {content: 'content', code: 'code', ... ...}
+ * @return {Promise<any>}
+ */
+function save(vericode) {
+    return new Promise((resolve, reject) => {
+        entities.VerificationCode.create({
+            content: vericode.phoneNum,
+            code: vericode.code,
+            status: vericode.status,
+            riseTime: vericode.riseTime,
+            validTime: vericode.validTime,
+            count: vericode.count,
+            dayCount: vericode.dayCount,
+            dayMax: vericode.dayMax
+        }).then(vericode => {
+            resolve(vericode)
+        }).catch(error => {
+            reject(error)
+        })
+    })
+}
+
 export default {
-    findByPhoneNum
+    findByPhoneNum,
+    save
 }
