@@ -21,4 +21,14 @@ describe('手机短信验证码相关测试', () => {
             done();
         })
     });
+
+    it('verify code', function (done) {
+        mainService.verifyCode('18986180066', '3836').then(data=>{
+            console.log(data);
+            done();
+        }).catch(error =>{
+            console.log(error);
+            done();
+        })
+    });
 });

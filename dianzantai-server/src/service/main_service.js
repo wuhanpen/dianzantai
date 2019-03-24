@@ -182,31 +182,41 @@ mainService.sendVerifyCode = function (phoneNumber, code) {
  * @param code
  */
 mainService.verifyCode = function (phoneNumber, code) {
-    const result = vecricode_rep.findByPhoneNum(phoneNumber);
-    let data = {};
-    console.log(result.validTime)
-    if (!result) {
-        data.message = '验证码不正确！';
-        data.success = false;
-        return data;
-    } else if (code !== result.code) {
-        data.message = '验证码不正确！';
-        data.success = false;
-        return data;
-    } else if (result.status === 0) {
-        data.message = '验证码不正确！';
-        data.success = false;
-        return data;
-    } else if (moment().toDate().getTime() > moment(result.validTime).toDate().getTime()) {
-        data.message = '验证码已过期！';
-        data.success = false;
-        return data;
-    } else {
-        data.message = '验证成功';
-        data.success = true;
-        vecricode_rep.update();
-        return data;
-    }
+    return new Promise((resolve, reject)=>{
+        vecricode_rep.findByPhoneNum(phoneNumber).then(result=>{
+            console.log(result.dataValues);
+            let data = {};
+            if (!result) {
+                data.message = '验证码不正确！';
+                data.success = false;
+            } else if (code !== result.dataValues.code) {
+                data.message = '验证码不正确！';
+                data.success = false;
+            } else if (result.dataValues.status === 0) {
+                data.message = '验证码不正确！';
+                data.success = false;
+            } else if (moment().toDate().getTime() > moment(result.dataValues.validTime).toDate().getTime()) {
+                data.message = '验证码已过期！';
+                data.success = false;
+            } else {
+                data.message = '验证成功';
+                data.success = true;
+                let codeInfo = {};
+                codeInfo.phoneNum = phoneNumber;
+                codeInfo.code = code;
+                codeInfo.status = 0;
+                // codeInfo.riseTime = moment().toDate();
+                // codeInfo.validTime = moment().add(verificationCode.validTime, 'seconds').toDate();
+                codeInfo.count = 1;
+                codeInfo.dayCount = 1;
+                codeInfo.dayMax = verificationCode.dayMax;
+                vecricode_rep.update(codeInfo);
+            }
+            resolve(data);
+        }).catch(error =>{
+            reject(error);
+        })
+    });
 };
 
 
