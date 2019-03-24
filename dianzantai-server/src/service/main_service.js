@@ -15,7 +15,7 @@ const config = require('../lib/config');
 const verificationCode = config.get('verificationCode');
 const moment = require('moment');
 
-let smsClient = null;
+
 let mainService = {};
 
 mainService.findAllStaffOrdbyFL = function () {
@@ -89,78 +89,91 @@ mainService.findAllStaffOrdbyFL = function () {
 };
 
 mainService.createSMSCode = function (phoneNum) {
-    let user = staffRep.findById(phoneNum);
-    if (user === null) {
+    return new Promise((resolve, reject) => {
+        staffRep.findById(phoneNum).then(user=>{
+            if (user) {
+                vecricode_rep.findByPhoneNum(phoneNum).then(result => {
+                    let msgInfo = {};
+                    let code = utils.createRandomStr(4);
+                    if (result) {
+                        let codeInfo = {};
+                        codeInfo.phoneNum = phoneNum;
+                        codeInfo.code = code;
+                        codeInfo.status = 1;
+                        codeInfo.riseTime = moment().toDate();
+                        codeInfo.validTime = moment().add(verificationCode.validTime, 'seconds').toDate();
+                        codeInfo.count = 1;
+                        codeInfo.dayCount = 1;
+                        codeInfo.dayMax = verificationCode.dayMax;
+                        vecricode_rep.update(codeInfo);
+                        msgInfo.data = code;
+                        resolve(msgInfo);
+                        //return msgInfo;
+                    } else {
+                        let codeInfo = {};
+                        codeInfo.phoneNum = phoneNum;
+                        codeInfo.code = code;
+                        codeInfo.status = 1;
+                        codeInfo.riseTime = moment().toDate();
+                        codeInfo.validTime = moment().add(verificationCode.validTime, 'seconds').toDate();
+                        codeInfo.count = 1;
+                        codeInfo.dayCount = 1;
+                        codeInfo.dayMax = verificationCode.dayMax;
+                        vecricode_rep.save(codeInfo);
+                        msgInfo.data = code;
+                        resolve(msgInfo);
+                        //return msgInfo;
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    reject(error);
+                });
+            }else {
+                reject("用户不存在！");
+            }
+        }).catch(error =>{
+            reject(error);
+        });
+    })
 
-    }
-    let result;
-    vecricode_rep.findByPhoneNum(phoneNum).then(verificationCode =>{
-        result = verificationCode;
-    }).catch(error =>{
-        console.log(error);
-    });
-    let msgInfo = {};
-    let code = utils.createRandomStr(4);
-    if (result) {
-        let codeInfo = {};
-        codeInfo.phoneNum = phoneNum;
-        codeInfo.code = code;
-        codeInfo.status = 1;
-        codeInfo.riseTime = moment().toDate();
-        codeInfo.validTime = moment().add(verificationCode.validTime, 'seconds').toDate();
-        codeInfo.count = 1;
-        codeInfo.dayCount = 1;
-        codeInfo.dayMax = verificationCode.dayMax;
-        vecricode_rep.update(codeInfo);
-        msgInfo.data = code;
-        return msgInfo;
-    } else {
-        let codeInfo = {};
-        codeInfo.phoneNum = phoneNum;
-        codeInfo.code = code;
-        codeInfo.status = 1;
-        codeInfo.riseTime = moment().toDate();
-        codeInfo.validTime = moment().add(verificationCode.validTime, 'seconds').toDate();
-        codeInfo.count = 1;
-        codeInfo.dayCount = 1;
-        codeInfo.dayMax = verificationCode.dayMax;
-        vecricode_rep.save(codeInfo);
-        msgInfo.data = code;
-        return msgInfo;
-    }
+
 };
 
-mainService.sentSMS=function(option) {
-    if (smsClient === null) {
+mainService.sentSMSCode = function (option) {
+    return new Promise((resolve, reject) => {
         let configVerificationCode = verificationCode;
         const accessKeyId = configVerificationCode.accessKeyId;
         const secretAccessKey = configVerificationCode.secretAccessKey;
-        smsClient = new SMSClient({accessKeyId, secretAccessKey});
-    }
-    return new Promise((resolve, reject) => {
-        smsClient.sendSMS(option).then(function (res) {
+        let smsClient = new SMSClient({accessKeyId, secretAccessKey});
+
+        smsClient.sendSMS(option).then(res => {
             let {Code} = res;
             if (Code === 'OK') {
                 resolve(Code);
             } else {
                 reject(Code);
             }
-        }, function (err) {
-            reject(err);
+        }).catch(error => {
+            reject(error);
         });
-    })
+    });
 };
 
 mainService.sendVerifyCode = function (phoneNumber, code) {
-    let option = {};
-    let templateParam = {code: code.data};
-    option.PhoneNumbers = phoneNumber;
-    option.SignName = verificationCode.signName;
-    option.TemplateCode = 'SMS_148866200';
-    option.TemplateParam = JSON.stringify(templateParam);
-    //option.TemplateParam = code.data;
-    let sendStatus = mainService.sendSMS(option);
-    return sendStatus;
+    return new Promise((resolve, reject) => {
+        let option = {};
+        let templateParam = {code: code.data};
+        option.PhoneNumbers = phoneNumber;
+        option.SignName = verificationCode.signName;
+        option.TemplateCode = 'SMS_148866200';
+        option.TemplateParam = JSON.stringify(templateParam);
+        mainService.sentSMSCode(option).then(sendStatus => {
+            resolve(sendStatus);
+        }).catch(error => {
+            reject(error);
+        })
+
+    });
 };
 
 /**

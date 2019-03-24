@@ -12,10 +12,9 @@ import mainService from '../src/service/main_service'
 
 describe('手机短信验证码相关测试', () => {
     it('send msg', function (done) {
-        // let code = mainService.createSMSCode('18768890710');
-        // mainService.sendVerifyCode('18768890710', code);
-        mainService.createSMSCode('18768890710').then(code =>{
-            mainService.sendVerifyCode('18768890710', code);
+        mainService.createSMSCode('18986180066').then(code =>{
+            //mainService.sendVerifyCode('18768890710', code);
+            console.log(code);
             done();
         }).catch(error =>{
             logger.info(error);
