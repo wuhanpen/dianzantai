@@ -59,23 +59,7 @@ const VerificationCode = sequelize.define("verification_code", {
     dayMax: {
         type: INTEGER,
         defaultValue: 5,
-    },
-    updated_at: {
-        type: DATE,
-        get() {
-            let str = this.getDataValue('updated_at');
-            if (str) {
-                str = moment(str).format('YYYY-MM-DD HH:mm:ss');
-            }
-            return str;
-        },
-    },
-    created_at: {
-        type: DATE,
-        get() {
-            return moment(this.getDataValue('created_at')).format('YYYY-MM-DD HH:mm:ss');
-        },
-    },
+    }
 }, {
     timestamps: true,
 });
