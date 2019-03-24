@@ -93,11 +93,15 @@ mainService.createSMSCode = function (phoneNum) {
     if (user === null) {
 
     }
-    const result = vecricode_rep.findByPhoneNum(phoneNum);
-    console.log(result.dataValues);
+    let result;
+    vecricode_rep.findByPhoneNum(phoneNum).then(verificationCode =>{
+        result = verificationCode;
+    }).catch(error =>{
+        console.log(error);
+    });
     let msgInfo = {};
     let code = utils.createRandomStr(4);
-    if (result.PromiseValue !== undefined) {
+    if (result) {
         let codeInfo = {};
         codeInfo.phoneNum = phoneNum;
         codeInfo.code = code;
