@@ -90,7 +90,7 @@ mainService.findAllStaffOrdbyFL = function () {
 
 mainService.createSMSCode = function (phoneNum) {
     return new Promise((resolve, reject) => {
-        staffRep.findById(phoneNum).then(user=>{
+        staffRep.findById(phoneNum).then(user => {
             if (user) {
                 vecricode_rep.findByPhoneNum(phoneNum).then(result => {
                     let msgInfo = {};
@@ -128,10 +128,10 @@ mainService.createSMSCode = function (phoneNum) {
                     console.log(error);
                     reject(error);
                 });
-            }else {
+            } else {
                 reject("用户不存在！");
             }
-        }).catch(error =>{
+        }).catch(error => {
             reject(error);
         });
     })
@@ -182,8 +182,8 @@ mainService.sendVerifyCode = function (phoneNumber, code) {
  * @param code
  */
 mainService.verifyCode = function (phoneNumber, code) {
-    return new Promise((resolve, reject)=>{
-        vecricode_rep.findByPhoneNum(phoneNumber).then(result=>{
+    return new Promise((resolve, reject) => {
+        vecricode_rep.findByPhoneNum(phoneNumber).then(result => {
             console.log(result.dataValues);
             let data = {};
             if (!result) {
@@ -213,11 +213,56 @@ mainService.verifyCode = function (phoneNumber, code) {
                 vecricode_rep.update(codeInfo);
             }
             resolve(data);
-        }).catch(error =>{
+        }).catch(error => {
             reject(error);
         })
     });
 };
 
+/**
+ * 用户是否是首次登陆
+ * @param openid
+ * @return {Promise<any>}
+ */
+mainService.isPreLanding = function (openid) {
+    return new Promise((resolve, reject) => {
+        staffRep.findByOpenId(openid).then(result => {
+            if (!result) {
+                let data = {};
+                data.message = "首次登陆";
+                data.result = true;
+                resolve(data);
+            } else {
+                let data = {};
+                data.message = "非首次登陆";
+                data.result = false;
+                resolve(data);
+            }
+        }).catch(error => {
+            reject(error);
+        })
+    })
+};
+
+
+mainService.userActive = function (phone, openid, password) {
+    return new Promise((resolve, reject) => {
+        staffRep.acitveUpdate(phone, openid, password).then(result => {
+            if (result) {
+                let data = {};
+                data.message = "激活成功！";
+                data.result = true;
+                resolve(data);
+            } else {
+                let data = {};
+                data.message = "激活失败！";
+                data.result = false;
+                resolve(data);
+            }
+        }).catch(error => {
+            reject(error);
+        })
+    })
+};
 
 module.exports = mainService;

@@ -63,8 +63,43 @@ function findById(id) {
     })
 }
 
+function findByOpenId(openId) {
+    return new Promise((resolve, reject) => {
+        entities.Staff.findOne({
+            where: {
+                openID: openId
+            }
+        }).then(user => {
+            resolve(user);
+        }).catch(error => {
+            reject(error);
+        })
+    })
+}
+
+function acitveUpdate(phone, openId, password) {
+    return new Promise((resolve, reject) => {
+        entities.Staff.update(
+            {
+                openID: openId,
+                passwd: password
+            },
+            {
+                where: {
+                    content: phone
+                }
+            }).then(staff =>{
+                resolve(staff);
+        }).catch(error =>{
+            reject(error);
+        })
+    })
+}
+
 export default {
     save: save,
     findAll: findAll,
-    findById
+    findById: findById,
+    findByOpenId: findByOpenId,
+    acitveUpdate:acitveUpdate
 }
