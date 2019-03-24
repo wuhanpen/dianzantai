@@ -9,6 +9,7 @@ require('babel-register');
 const logger = require('../src/lib/logger');
 import departmentRep from '../src/rep/department_rep';
 import staffRep from '../src/rep/staff_rep';
+import vericodeRep from '../src/rep/vericode_rep'
 
 describe('数据库部门表接口相关测试', () => {
     it('department save', function (done) {
@@ -46,6 +47,18 @@ describe('数据库员工表接口相关测试', () => {
         }).catch(error => {
             logger.error(error);
             done(error)
+        })
+    });
+});
+
+describe('数据库手机验证码表接口相关测试', () => {
+    it('vericode findByPhoneNum', function (done) {
+        vericodeRep.findByPhoneNum('18768890710').then(vericode => {
+            logger.info(vericode.dataValues);
+            done();
+        }).catch(error => {
+            logger.error(error);
+            done();
         })
     });
 });
