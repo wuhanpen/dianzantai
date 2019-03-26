@@ -1,0 +1,93 @@
+<template name = "transaction">
+  <view class = "transaction-info-container">
+
+    <block wx:if="{{filter==0 || filter ==1 || filter ==2}}">
+      <block wx:if="{{item.sendName==userName}}">
+        <view class = "transName">
+          <text>{{item.receiveName}}</text>
+        </view>
+        <view style='height:30rpx;display:flex;margin-top:0;'>
+          <view class='time'>
+            <text>{{item.time}}</text>
+          </view>
+          <view class='expend'>
+            <text>-{{item.number}}</text>
+          </view>
+        </view>
+        <view class = "remark">
+          <text>{{item.remark}}</text>
+        </view>
+        
+      </block>
+
+      <block wx:if="{{item.receiveName==userName}}">
+        <view class = "transName">
+          <text>{{item.sendName}}</text>
+        </view>
+        <view style='height:30rpx;display:flex;margin-top:0;'>
+          <view class='time'>
+            <text>{{item.time}}</text>
+          </view>
+          <view class='income'>
+            <text>+{{item.number}}</text>
+          </view>
+        </view>
+        <view class = "remark">
+          <text>{{item.remark}}</text>
+        </view>
+      </block>
+      
+    </block>
+
+
+    <!--
+    <block wx:if="{{filter==1}}">
+
+      
+
+      <block wx:if="{{item.receiveName==userName}}">
+        <view>
+          <text class = "transName">{{item.sendName}}</text>
+        </view>
+        <view style='height:30rpx;display:flex;margin-top:0;'>
+          <view class='time'>
+            <text>{{item.time}}</text>
+          </view>
+          <view class='income'>
+            <text>+{{item.number}}</text>
+          </view>
+        </view>
+        <view class = "remark">
+          <text>{{item.remark}}</text>
+        </view>
+      </block>
+      
+    </block>
+
+
+    <block wx:if="{{filter==2}}">
+      <block wx:if="{{item.sendName==userName}}">
+        <view>
+          <text class = "transName">{{item.receiveName}}</text>
+        </view>
+        <view style='height:30rpx;display:flex;margin-top:0;'>
+          <view class='time'>
+            <text>{{item.time}}</text>
+          </view>
+          <view class='expend'>
+            <text>-{{item.number}}</text>
+          </view>
+        </view>
+        <view class = "remark">
+          <text>{{item.remark}}</text>
+        </view>
+        
+      </block>
+      
+    </block>
+    -->
+
+
+  </view>
+
+</template>
