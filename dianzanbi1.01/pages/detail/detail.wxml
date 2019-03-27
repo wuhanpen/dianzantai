@@ -1,0 +1,120 @@
+<import src="../template/transaction.wxml"/>
+
+<view style='padding: 0 0;'>
+
+
+<view style='width:100%;display:flex;margin-top:10rpx;'>
+  <view style='font-size:40rpx;width:50rpx;' bindtap='gobalance'>
+    <text>{{'<'}}</text>
+  </view>
+  <view style='font-size:40rpx;width:700rpx;text-align:center;'>
+    <text>交易明细</text>
+  </view>
+  
+</view>
+
+<view style='width:100%;display:flex;' wx:if="{{filter==0}}">
+  <view style='font-size:40rpx;width:34%;text-align:center;color:black;'>
+    <view bindtap="setfilter0">
+      <text>全部</text>
+    </view>
+    <view style='margin:0 auto;width:70%;height:2rpx;background-color:red;'></view>
+  </view>
+  <view style='font-size:40rpx;width:33%;text-align:center;color:gray;'>
+    <view bindtap="setfilter1">
+      <text>收入</text>
+    </view>
+    <view></view>
+  </view>
+  <view style='font-size:40rpx;width:33%;text-align:center;color:gray;'>
+    <view bindtap="setfilter2">
+      <text>支出</text>
+    </view>
+    <view></view>
+  </view>
+</view>
+
+<view style='width:100%;display:flex;' wx:if="{{filter==1}}">
+  <view style='font-size:40rpx;width:34%;text-align:center;color:gray;'>
+    <view bindtap="setfilter0">
+      <text>全部</text>
+    </view>
+    <view></view>
+  </view>
+  <view style='font-size:40rpx;width:33%;text-align:center;color:black;'>
+    <view bindtap="setfilter1">
+      <text>收入</text>
+    </view>
+    <view style='margin:0 auto;width:70%;height:2rpx;background-color:red;'></view>
+  </view>
+  <view style='font-size:40rpx;width:33%;text-align:center;color:gray;'>
+    <view bindtap="setfilter2">
+      <text>支出</text>
+    </view>
+    <view></view>
+  </view>
+</view>
+
+<view style='width:100%;display:flex;' wx:if="{{filter==2}}">
+  <view style='font-size:40rpx;width:34%;text-align:center;color:gray;'>
+    <view bindtap="setfilter0">
+      <text>全部</text>
+    </view>
+    <view></view>
+  </view>
+  <view style='font-size:40rpx;width:33%;text-align:center;color:gray;'>
+    <view bindtap="setfilter1">
+      <text>收入</text>
+    </view>
+    <view></view>
+  </view>
+  <view style='font-size:40rpx;width:33%;text-align:center;color:black;'>
+    <view bindtap="setfilter2">
+      <text>支出</text>
+    </view>
+    <view style='margin:0 auto;width:70%;height:2rpx;background-color:red;'></view>
+  </view>
+</view>
+
+
+
+
+<view style = "margin-top:0rpx;height:100%;position:relative;">
+  <block wx:if="{{filter==0}}">
+    <block wx:key='sendID' wx:for="{{transaction}}">
+      <template is = "transaction" data='{{item:item,filter:filter,userName:userName}}'/> <!--将item和filter都传到模版里去，不然模版中获取不到参数-->
+    </block>
+  </block>
+
+  <block wx:if="{{filter==1}}">
+    <block wx:key='sendID' wx:for="{{receivetrans}}">
+      <template is = "transaction" data='{{item:item,filter:filter,userName:userName}}'/> <!--将item和filter都传到模版里去，不然模版中获取不到参数-->
+    </block>
+  </block>
+
+  <block wx:if="{{filter==2}}">
+    <block wx:key='sendID' wx:for="{{sendtrans}}">
+      <template is = "transaction" data='{{item:item,filter:filter,userName:userName}}'/> <!--将item和filter都传到模版里去，不然模版中获取不到参数-->
+    </block>
+  </block>
+
+</view>
+
+
+</view>
+
+
+<view style='position:fixed;bottom:0rpx;width:100%;display:flex;flex-direction:row;justify-content:center;'>
+  <view style='width:150rpx;'>
+    <button size='mini' type='default' class='free-btn-bordernone' bindtap='gobalance'>主页</button>
+  </view>
+  <view style='width:150rpx;'>
+    <button size='mini' type='default' class='free-btn-bordernone'>转账</button>
+  </view>
+  <view style='width:150rpx;'>
+    <button size='mini' type='default' class='free-btn-bordernone'>好友</button>
+  </view>
+  <view style='width:150rpx;'>
+    <button size='mini' type='default' class='free-btn-bordernone'>我的</button>
+  </view>
+</view>

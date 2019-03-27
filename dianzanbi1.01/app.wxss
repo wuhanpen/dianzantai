@@ -1,0 +1,4 @@
+/**app.wxss**/
+
+/**导入模板样式文件**/
+@import "/pages/template/transaction.wxss"

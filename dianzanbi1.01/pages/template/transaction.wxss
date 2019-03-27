@@ -1,0 +1,48 @@
+/***template 的样式 （这里为了能全局使用，不在所有用到模版的页面都引用一次，将改样式的引用放到了app.wxss中）***/
+/**交易信息的容器**/
+.transaction-info-container{
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  height:100rpx;
+  width:100%;
+  font-size:30rpx;
+  margin-top:40rpx;
+}
+
+
+/**交易对方姓名**/
+.transName {
+  height: 30rpx;
+  font-size:30rpx;
+  color:black;
+}
+
+/**交易时间**/
+.time {
+  width: 650rpx;
+  font-size:30rpx;
+  color:gray;
+}
+
+/**收入交易金额**/
+.income {
+  width: 100rpx;
+  font-size:30rpx;
+  color:red;
+}
+
+/**支出交易金额**/
+.expend {
+  width: 100rpx;
+  font-size:30rpx;
+  color:black;
+}
+
+/**备注**/
+.remark {
+  height: 30rpx;
+  font-size:30rpx;
+  color:black;
+}
+
