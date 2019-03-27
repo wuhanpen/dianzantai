@@ -244,7 +244,13 @@ mainService.isPreLanding = function (openid) {
     })
 };
 
-
+/**
+ * 用户激活
+ * @param phone
+ * @param openid
+ * @param password
+ * @return {Promise<any>}
+ */
 mainService.userActive = function (phone, openid, password) {
     return new Promise((resolve, reject) => {
         staffRep.acitveUpdate(phone, openid, password).then(result => {
@@ -264,5 +270,30 @@ mainService.userActive = function (phone, openid, password) {
         })
     })
 };
+
+/**
+ * 用户登录
+ * @param openID
+ */
+mainService.loginIn = function (openID) {
+    return new Promise((resolve, reject) => {
+        staffRep.findByOpenId(openID).then(user => {
+            if (user) {
+                let data = {};
+                data.message = '登录成功';
+                data.result = true;
+                resolve(data);
+            } else {
+                let data = {};
+                data.message = '登录失败';
+                data.result = false;
+                resolve(data);
+            }
+        }).catch(error => {
+            reject(error);
+        })
+    });
+
+}
 
 module.exports = mainService;

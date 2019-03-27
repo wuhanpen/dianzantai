@@ -8,7 +8,7 @@ import mainService from '../src/service/main_service'
 /**
  * 用户是否首次登陆
  */
-router.get('/staff/login/first', (req, res, next) => {
+router.get('/staff/login/first', (req, res) => {
     mainService.isPreLanding(req.query.openID).then(result => {
         res.json(result);
     }).catch(error => {
@@ -31,7 +31,11 @@ router.get('/staff/active', (req, res, next) => {
  * 用户登陆
  */
 router.get('/staff/login', (req, res) => {
-
+    mainService.loginIn(req.query.openID).then(result => {
+        res.json(result);
+    }).catch(error => {
+        res.json({error: error});
+    })
 });
 
 /**
