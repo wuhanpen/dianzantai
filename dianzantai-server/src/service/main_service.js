@@ -9,6 +9,7 @@ import staffRep from '../rep/staff_rep';
 import pingyinUtil from '../utils/pinyinUtil'
 import vecricode_rep from "../rep/vericode_rep";
 import utils from "../utils/utils";
+import transactionRep from '../rep/transaction_rep'
 
 const SMSClient = require('@alicloud/sms-sdk');
 const config = require('../lib/config');
@@ -294,6 +295,31 @@ mainService.loginIn = function (openID) {
         })
     });
 
-}
+};
+
+/**
+ * 发送点赞币
+ * @param transaction
+ * @return {Promise<any>}
+ */
+mainService.sendBill = function (transaction) {
+    return new Promise((resolve, reject) => {
+        transactionRep.save(transaction).then(result => {
+            if (result) {
+                let data = {};
+                data.message = '交易成功';
+                data.result = true;
+                resolve(data);
+            } else {
+                let data = {};
+                data.message = '交易失败';
+                data.result = false;
+                resolve(data);
+            }
+        }).catch(error => {
+            reject(error);
+        })
+    })
+};
 
 module.exports = mainService;

@@ -9,6 +9,7 @@ import {sequelize, Sequelize} from './sequelize_helper';
 import Staff from './staff'
 import Department from './department'
 import VerificationCode from './verification_code'
+import Transaction from "./transaction";
 
 
 Department.hasMany(Staff, {
@@ -21,6 +22,7 @@ const entities = {
     Staff,
     Department,
     VerificationCode,
+    Transaction,
     sequelize,
     Sequelize,
 };

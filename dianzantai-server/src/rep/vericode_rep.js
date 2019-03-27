@@ -6,7 +6,6 @@
  \*/
 
 import entities from '../model/entities';
-import VerificationCode from '../model/verification_code'
 
 const logger = require('../lib/logger');
 

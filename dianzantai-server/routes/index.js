@@ -3,6 +3,8 @@ const _ = require('lodash')
 const router = express.Router();
 let env = process.env.NODE_ENV || 'development';
 
+import mainService from '../src/service/main_service'
+
 /* 服务端主页 */
 router.get('/(|item)', function (req, res) {
     if (_.trim(env) === 'production') {
@@ -24,6 +26,11 @@ router.get('/account_info', (req, res) => {
  *
  */
 router.post('/send/dianzanbi', (req, res) => {
+    mainService.sendBill(req.query.transaction).then(result => {
+        res.json(result);
+    }).catch(error => {
+        res.json({error: error});
+    })
 
 });
 
